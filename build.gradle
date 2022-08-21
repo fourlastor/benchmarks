@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id "me.champeau.jmh" version "0.6.6"
+}
+
+group 'io.github.fourlastor.benchmarks'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.badlogicgames.gdx:gdx:1.11.0'
+}
+
+task deleteEmptyBmList(type: Delete) {
+    delete "$buildDir/jmh-generated-classes/META-INF/BenchmarkList"
+}
+jmhCompileGeneratedClasses.finalizedBy deleteEmptyBmList
+
+jmh {
+    fork = 1
+    iterations = 2
+    timeOnIteration = '3s'
+    warmup = '3s'
+}
+
+test {
+    useJUnitPlatform()
+}
