@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id "me.champeau.jmh" version "0.6.6"
+    id 'org.jetbrains.kotlin.jvm' version '1.7.20'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.7.20'
 }
 
 group 'io.github.fourlastor.benchmarks'
@@ -12,6 +14,10 @@ repositories {
 
 dependencies {
     implementation 'com.badlogicgames.gdx:gdx:1.11.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
+    implementation 'com.google.code.gson:gson:2.10'
+    api "com.badlogicgames.gdx:gdx:1.11.0"
 }
 
 task deleteEmptyBmList(type: Delete) {
@@ -28,4 +34,14 @@ jmh {
 
 test {
     useJUnitPlatform()
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
