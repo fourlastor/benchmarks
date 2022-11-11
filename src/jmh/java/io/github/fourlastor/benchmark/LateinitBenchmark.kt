@@ -18,7 +18,7 @@ open class LateinitBenchmark {
     lateinit var initialized: Any
 
     var nullField: Any? = null
-    var nonNullField: Any? = 1
+    var notNullField: Any? = 1
 
     @Setup
     fun init() {
@@ -37,11 +37,11 @@ open class LateinitBenchmark {
 
     @Benchmark
     fun checkNoNull(blackhole: Blackhole) {
-        blackhole.consume(nullField == null)
+        blackhole.consume(notNullField == null)
     }
 
     @Benchmark
     fun checkNull(blackhole: Blackhole) {
-        blackhole.consume(nonNullField == null)
+        blackhole.consume(nullField == null)
     }
 }
