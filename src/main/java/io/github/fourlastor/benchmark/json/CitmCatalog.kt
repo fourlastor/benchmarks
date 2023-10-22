@@ -1,8 +1,10 @@
 package io.github.fourlastor.benchmark.json
 
+import com.squareup.moshi.JsonClass
 import kotlinx.serialization.Serializable
 
 
+@JsonClass(generateAdapter = true)
 @Serializable
 data class CitmCatalog(
     val areaNames: Map<String, String>,
@@ -18,6 +20,7 @@ data class CitmCatalog(
     val venueNames: Map<String, String>
 )
 
+@JsonClass(generateAdapter = true)
 @Serializable
 data class CitmPerformance(
     val eventId: Int,
@@ -31,15 +34,18 @@ data class CitmPerformance(
     val venueCode: String
 )
 
+@JsonClass(generateAdapter = true)
 @Serializable
 data class CitmSeatCategory(
     val areas: List<CitmArea>,
     val seatCategoryId: Int
 )
 
+@JsonClass(generateAdapter = true)
 @Serializable
 data class CitmArea(val areaId: Int, val blockIds: List<String>)
 
+@JsonClass(generateAdapter = true)
 @Serializable
 data class CitmPrice(
     val amount: Int,
@@ -47,6 +53,7 @@ data class CitmPrice(
     val seatCategoryId: Int
 )
 
+@JsonClass(generateAdapter = true)
 @Serializable
 data class CitmEvent(
     val description: String?,
