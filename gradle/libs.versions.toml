@@ -1,0 +1,26 @@
+[versions]
+gdx = "1.11.0"
+gson = "2.10"
+ksp = "1.9.22-1.0.17"
+jmh = "0.7.2"
+jetbrains-kotlin = "1.9.22"
+jsoniter = "0.9.23"
+kotlinx-immutable = "0.3.7"
+kotlinx-serialization = "1.6.2"
+moshi = "1.15.0"
+pcollections = "4.0.1"
+[libraries]
+gdx-core = { module = "com.badlogicgames.gdx:gdx", version.ref = "gdx" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson"}
+kotlin-std = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "jetbrains-kotlin"}
+kotlinx-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-immutable"}
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization"}
+jsoniter = { module = "com.jsoniter:jsoniter", version.ref = "jsoniter"}
+moshi-core = { module = "com.squareup.moshi:moshi", version.ref = "moshi"}
+moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi"}
+pcollections = { module = "org.pcollections:pcollections", version.ref = "pcollections"}
+[plugins]
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrains-kotlin" }
+jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "jetbrains-kotlin" }
+jmh = { id = "me.champeau.jmh", version.ref = "jmh" }
+google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
