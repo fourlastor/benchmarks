@@ -15,13 +15,19 @@ import kotlin.random.Random
 @Fork(2)
 open class ListsBenchmark {
     private val random = Random
-    private val smallList = List(100) { random.nextInt() }
     private val list = List(1000) { random.nextInt() }
     private val immutableList = list.toImmutableList()
     private val pImmutableList = TreePVector.from(list)
-    private val lists = List(10) { smallList.toList() }
-    private val immutableLists = List(10) { smallList.toImmutableList() }
-    private val pImmutableLists = List(10) { TreePVector.from(smallList) }
+    private val smallList = List(100) { random.nextInt() }
+    private val smallImmutableList = smallList.toImmutableList()
+    private val smallPImmutableList = TreePVector.from(smallList)
+
+    private var numberToAdd: Int = 0
+
+    @Setup(Level.Invocation)
+    fun setup() {
+        numberToAdd = random.nextInt()
+    }
 
     @Benchmark
     fun list(blackhole: Blackhole) {
@@ -42,27 +48,36 @@ open class ListsBenchmark {
         }
     }
     @Benchmark
-    fun lists(blackhole: Blackhole) {
-        for (list in lists) {
-            for (i in list) {
-                blackhole.consume(i)
-            }
-        }
+    fun toImmutableList(blackhole: Blackhole) {
+        blackhole.consume(list.toImmutableList())
     }
     @Benchmark
-    fun immutableLists(blackhole: Blackhole) {
-        for (immutableList in immutableLists) {
-            for (i in immutableList) {
-                blackhole.consume(i)
-            }
-        }
+    fun toPImmutableList(blackhole: Blackhole) {
+        blackhole.consume(TreePVector.from(list))
+    }
+
+    @Benchmark
+    fun listAdd(blackhole: Blackhole) {
+        blackhole.consume(list + numberToAdd)
     }
     @Benchmark
-    fun pImmutableLists(blackhole: Blackhole) {
-        for (pImmutableList in pImmutableLists) {
-            for (i in pImmutableList) {
-                blackhole.consume(i)
-            }
-        }
+    fun immutableListAdd(blackhole: Blackhole) {
+        blackhole.consume(immutableList + numberToAdd)
+    }
+    @Benchmark
+    fun pImmutableListAdd(blackhole: Blackhole) {
+        blackhole.consume(pImmutableList + numberToAdd)
+    }
+    @Benchmark
+    fun listConcat(blackhole: Blackhole) {
+        blackhole.consume(list + smallList)
+    }
+    @Benchmark
+    fun immutableListConcat(blackhole: Blackhole) {
+        blackhole.consume(immutableList + smallImmutableList)
+    }
+    @Benchmark
+    fun pImmutableListConcat(blackhole: Blackhole) {
+        blackhole.consume(pImmutableList + smallPImmutableList)
     }
 }
