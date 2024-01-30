@@ -1,6 +1,7 @@
 package io.github.fourlastor.benchmark
 
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import org.openjdk.jmh.annotations.*
 import org.openjdk.jmh.infra.Blackhole
 import org.pcollections.TreePVector
@@ -17,9 +18,11 @@ open class ListsBenchmark {
     private val random = Random
     private val list = List(1000) { random.nextInt() }
     private val immutableList = list.toImmutableList()
+    private val persistentList = list.toPersistentList()
     private val pImmutableList = TreePVector.from(list)
     private val smallList = List(100) { random.nextInt() }
     private val smallImmutableList = smallList.toImmutableList()
+    private val smallPersistentList = smallList.toPersistentList()
     private val smallPImmutableList = TreePVector.from(smallList)
 
     private var numberToAdd: Int = 0
@@ -41,6 +44,13 @@ open class ListsBenchmark {
             blackhole.consume(i)
         }
     }
+
+    @Benchmark
+    fun persistentList(blackhole: Blackhole) {
+        for (i in persistentList) {
+            blackhole.consume(i)
+        }
+    }
     @Benchmark
     fun pImmutableList(blackhole: Blackhole) {
         for (i in pImmutableList) {
@@ -50,6 +60,10 @@ open class ListsBenchmark {
     @Benchmark
     fun toImmutableList(blackhole: Blackhole) {
         blackhole.consume(list.toImmutableList())
+    }
+    @Benchmark
+    fun toPersistentList(blackhole: Blackhole) {
+        blackhole.consume(list.toPersistentList())
     }
     @Benchmark
     fun toPImmutableList(blackhole: Blackhole) {
@@ -65,6 +79,10 @@ open class ListsBenchmark {
         blackhole.consume(immutableList + numberToAdd)
     }
     @Benchmark
+    fun persistentListAdd(blackhole: Blackhole) {
+        blackhole.consume(persistentList + numberToAdd)
+    }
+    @Benchmark
     fun pImmutableListAdd(blackhole: Blackhole) {
         blackhole.consume(pImmutableList + numberToAdd)
     }
@@ -75,6 +93,10 @@ open class ListsBenchmark {
     @Benchmark
     fun immutableListConcat(blackhole: Blackhole) {
         blackhole.consume(immutableList + smallImmutableList)
+    }
+    @Benchmark
+    fun persistentListConcat(blackhole: Blackhole) {
+        blackhole.consume(persistentList + smallPersistentList)
     }
     @Benchmark
     fun pImmutableListConcat(blackhole: Blackhole) {
